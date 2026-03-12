@@ -1,3 +1,4 @@
+## news agent 
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain.agents import create_agent
 from langchain_groq import ChatGroq
@@ -18,9 +19,9 @@ async def create_news_agent():
     }
     )
     
-    tools = await client.get_tools()
+    tools = await client.get_tools() ## initializing tools
 
-    news_agent = create_agent(
+    news_agent = create_agent( ## creates news agent
         model = get_model(),
         tools = tools,
         system_prompt="""
