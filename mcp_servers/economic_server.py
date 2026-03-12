@@ -1,9 +1,11 @@
+## economic server
 import os 
 import requests
 from dotenv import load_dotenv
 from mcp.server.fastmcp import FastMCP
 load_dotenv()
 
+## loading FRED API key from environment variable
 FRED_API_KEY = os.getenv("FRED_API_KEY")
 
 mcp = FastMCP("economic_data_server")
@@ -24,7 +26,6 @@ def fetch_fred(series_id):
 
     if "observations" in data:
         return data["observations"][0]["value"]
-
     return "No data"
 
 @mcp.tool()
