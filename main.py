@@ -3,14 +3,13 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from supervisor.supervisor_agent import create_system
 
-
-app = FastAPI(title="Financial Intelligence API")
+app = FastAPI(title="MCP_BAsed Multi-Agent Financel Intelligence System", version="1.0")
 
 supervisor = None
 
+## output schema 
 class QueryRequest(BaseModel):
     query: str
-
 
 @app.on_event("startup")
 async def startup_event():
@@ -23,7 +22,6 @@ async def ask_query(request: QueryRequest):
     final_message = ""
 
     try:
-
         async for chunk in supervisor.astream(
             {"messages": [{"role": "user", "content": request.query}]}
         ):
@@ -41,20 +39,20 @@ async def ask_query(request: QueryRequest):
     except Exception as e:
 
         final_message = f"""
-System Error Encountered
+        System Error Encountered
 
-Reason:
-{str(e)}
+        Reason:
+        {str(e)}
 
-Temporary issue occurred while processing the request.
+        Temporary issue occurred while processing the request.
 
-Possible causes:
-• API rate limit
-• tool execution failure
-• external data provider error
+        Possible causes:
+        • API rate limit
+        • tool execution failure
+        • external data provider error
 
-Please try again.
-"""
+        Please try again.
+        """
 
     return {
         "query": request.query,
