@@ -2,6 +2,9 @@
 
 A production-oriented **Multi-Agent Financial Intelligence System** built using LangChain, LangGraph, FastMCP, and FastAPI. The system follows a **Supervisor-Agent architecture** over the **Model Context Protocol (MCP)**, where a central supervisor orchestrates three specialized AI agents — each connected to its own MCP server and backed by live external data sources.
 
+![UI screenshot 1](ui/assets/ui_1.png)
+![UI screenshot 2](ui/assets/ui_2.png)
+
 Unlike simple chatbot demos that respond from static knowledge, this system fetches **real-time financial data** from the FRED API, Google News RSS, and Wikipedia, routes queries intelligently across agents, and produces structured financial intelligence reports.
 
 The system is designed to simulate how industry-grade AI pipelines coordinate multiple specialized models over live data while enforcing **strict domain boundaries** to prevent irrelevant or hallucinated responses.

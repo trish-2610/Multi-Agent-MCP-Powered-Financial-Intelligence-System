@@ -1,0 +1,308 @@
+/* main stylesheet for Financial Intelligence System UI */
+
+/* ---------- color palette ---------- */
+:root {
+    /* finance-inspired dark green background */
+    --color-bg-start: #0f1a14;
+    --color-bg-end: #162110;
+
+    --color-primary: #e6f0e8;
+    --color-primary-light: #a3b8a7;
+    --color-accent: #16a34a;
+    --color-accent-dark: #15803d;
+    --color-accent-glow: rgba(22, 163, 74, 0.18);
+
+    --color-text: #e6f0e8;
+    --color-text-muted: #7a9e82;
+    --color-card-bg: #13201a;
+    --color-card-border: #1e3327;
+    --color-report-bg: #0f1a14;
+    --color-border: #1e3327;
+    --color-input-bg: #0d1710;
+
+    /* section header colors inside report */
+    --color-section-financial: #4ade80;
+    --color-section-economic: #34d399;
+    --color-section-news: #60a5fa;
+    --color-section-corporate: #a78bfa;
+
+    /* badges */
+    --color-badge-economic: #0ea5e9;
+    --color-badge-economic-bg: #0c2233;
+    --color-badge-news: #a78bfa;
+    --color-badge-news-bg: #1e1535;
+    --color-badge-corporate: #4ade80;
+    --color-badge-corporate-bg: #0f2a1a;
+    --color-badge-all: #fbbf24;
+    --color-badge-all-bg: #2a1f07;
+
+    --radius-lg: 16px;
+    --radius-md: 10px;
+    --radius-sm: 6px;
+    --spacing-xl: 56px;
+    --spacing-lg: 32px;
+    --spacing-md: 20px;
+    --spacing-sm: 12px;
+}
+
+/* ---------- global resets ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(160deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+    color: var(--color-text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* ---------- layout ---------- */
+header, footer { text-align: center; padding: var(--spacing-lg) 0; }
+
+main {
+    max-width: 950px;
+    width: 95%;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.card {
+    background: var(--color-card-bg);
+    padding: var(--spacing-lg) var(--spacing-md);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-card-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.card + .card { margin-top: var(--spacing-lg); }
+
+header {
+    background: rgba(13, 23, 16, 0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--color-card-border);
+    position: relative;
+}
+
+footer {
+    background: rgba(13, 23, 16, 0.92);
+    backdrop-filter: blur(6px);
+    border-top: 1px solid var(--color-card-border);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+/* ---------- typography ---------- */
+.title {
+    font-weight: 600;
+    font-size: 2rem;
+    color: var(--color-section-financial);
+    letter-spacing: 0.01em;
+}
+
+.subtitle {
+    font-weight: 300;
+    color: var(--color-text-muted);
+    margin-top: var(--spacing-sm);
+}
+
+/* ---------- form ---------- */
+.textarea-wrapper { position: relative; }
+
+.textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    background: var(--color-input-bg);
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1rem;
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    color: var(--color-text);
+}
+
+.textarea::placeholder { color: var(--color-text-muted); }
+
+.textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-glow);
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    border: none;
+    border-radius: var(--radius-md);
+    background: linear-gradient(90deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+    color: #ffffff;
+    font-family: 'Poppins', Arial, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.02em;
+}
+
+.btn:hover {
+    opacity: 0.9;
+    box-shadow: 0 4px 20px rgba(22, 163, 74, 0.35);
+}
+
+/* ---------- suggestions ---------- */
+.suggestions {
+    margin-top: var(--spacing-md);
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    text-align: left;
+}
+
+.suggestions strong {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-primary-light);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.suggestions ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.suggestions ul li {
+    margin-bottom: 8px;
+    padding: 7px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-card-border);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.suggestions ul li:hover {
+    border-color: var(--color-accent);
+    color: var(--color-section-financial);
+    background: var(--color-accent-glow);
+}
+
+/* ---------- loader ---------- */
+.loader {
+    text-align: center;
+    margin-top: var(--spacing-md);
+    color: var(--color-accent);
+    font-size: 0.92rem;
+    letter-spacing: 0.03em;
+}
+
+/* ---------- domain error ---------- */
+.domain-error {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: #1f0a0a;
+    border-left: 4px solid #ef4444;
+    border-radius: var(--radius-sm);
+    color: #fca5a5;
+    font-size: 0.92rem;
+}
+
+/* ---------- report section ---------- */
+.report-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-card-border);
+}
+
+.report-header h3 {
+    margin-bottom: 0;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+/* ---------- structured report blocks ---------- */
+.report-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.report-block {
+    background: var(--color-report-bg);
+    border: 1px solid var(--color-card-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.report-block-title {
+    padding: 10px var(--spacing-md);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--color-card-border);
+}
+
+.report-block-title.financial { background: #0d2218; color: var(--color-section-financial); }
+.report-block-title.economic  { background: #0a1f1c; color: var(--color-section-economic); }
+.report-block-title.news      { background: #0d1a2e; color: var(--color-section-news); }
+.report-block-title.corporate { background: #180f2e; color: var(--color-section-corporate); }
+
+.report-block-content {
+    padding: var(--spacing-md);
+    white-space: pre-wrap;
+    font-size: 0.93rem;
+    line-height: 1.9;
+    color: var(--color-text);
+}
+
+/* market outlook pill inside report */
+.outlook-pill {
+    display: inline-block;
+    padding: 3px 14px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.82rem;
+    margin-left: 6px;
+}
+.outlook-bullish  { background: #0f2a1a; color: #4ade80; border: 1px solid #166534; }
+.outlook-bearish  { background: #1f0a0a; color: #f87171; border: 1px solid #7f1d1d; }
+.outlook-neutral  { background: #1a1707; color: #fde047; border: 1px solid #713f12; }
+
+/* ---------- agent badges ---------- */
+.agent-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.badge-economic  { background: var(--color-badge-economic-bg);  color: var(--color-badge-economic); }
+.badge-news      { background: var(--color-badge-news-bg);      color: var(--color-badge-news); }
+.badge-corporate { background: var(--color-badge-corporate-bg); color: var(--color-badge-corporate); }
+.badge-all       { background: var(--color-badge-all-bg);       color: var(--color-badge-all); }
+
+/* ---------- responsiveness ---------- */
+@media (max-width: 640px) {
+    .title { font-size: 1.45rem; }
+    main { padding: var(--spacing-lg) var(--spacing-md); }
+    .textarea { min-height: 100px; }
+    .report-header { flex-direction: column; align-items: flex-start; }
+}

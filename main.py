@@ -1,15 +1,23 @@
 import asyncio
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from supervisor.supervisor_agent import create_system
 
-app = FastAPI(title="MCP-Based Multi-Agent Financel Intelligence System", version="1.0")
+app = FastAPI(title="MCP-Based Multi-Agent Financial Intelligence System", version="1.0")
+
+# serve the ui/ folder as static files at /ui
+app.mount("/ui", StaticFiles(directory="ui"), name="ui")
 
 supervisor = None
 
-## output schema 
 class QueryRequest(BaseModel):
     query: str
+
+@app.get("/")
+async def serve_ui():
+    return FileResponse("ui/index.html")
 
 @app.on_event("startup")
 async def startup_event():

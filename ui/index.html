@@ -1,0 +1,373 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Financial Intelligence System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/ui/style.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="title">Financial Intelligence System</h1>
+        <p class="subtitle">Multi-agent AI powered by real-time economic, news, and corporate data</p>
+    </header>
+
+    <main>
+        <section class="card" id="ask-section">
+            <div class="textarea-wrapper">
+                <textarea id="query" class="textarea" placeholder="Ask a financial question — e.g. Analyze Tesla's market position, What is the current inflation outlook?"></textarea>
+            </div>
+            <button id="ask-btn" class="btn" onclick="askQuestion()">Generate Report</button>
+
+            <div class="suggestions">
+                <strong>Sample queries</strong>
+                <ul>
+                    <li>What is the current inflation rate and how does it affect the market?</li>
+                    <li>Analyze Apple's competitors and industry position.</li>
+                    <li>What is the latest stock market news?</li>
+                </ul>
+            </div>
+
+            <div class="loader" id="loader" style="display:none;">
+                Analyzing financial data across agents...
+            </div>
+
+            <div class="domain-error" id="domain-error" style="display:none;">
+                This system only answers financial intelligence queries related to markets, economics, companies, or financial news.
+            </div>
+        </section>
+
+        <section class="card" id="report-section" style="display:none;">
+            <div class="report-header">
+                <h3>Financial Intelligence Report</h3>
+                <span class="agent-badge" id="agent-badge"></span>
+            </div>
+            <div class="report" id="report"></div>
+        </section>
+    </main>
+
+    <footer>
+        <small>© 2026 Financial Intelligence System. Powered by LangGraph &middot; FastMCP &middot; Groq</small>
+    </footer>
+
+    <script>
+        async function askQuestion() {
+            const query = document.getElementById("query").value.trim();
+
+            if (query === "") {
+                alert("Please enter a financial query.");
+                return;
+            }
+
+            // reset UI
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("report-section").style.display = "none";
+            document.getElementById("domain-error").style.display = "none";
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/query", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query })
+                });
+
+                const data = await response.json();
+                document.getElementById("loader").style.display = "none";
+
+                const report = data.report || "";
+
+                // check for domain rejection message
+                if (report.toLowerCase().includes("this system only answers")) {
+                    document.getElementById("domain-error").style.display = "block";
+                    return;
+                }
+
+                // display report
+                document.getElementById("report-section").style.display = "block";
+                document.getElementById("report").innerText = report;
+
+                // detect which agent(s) were used and set badge
+                const badge = document.getElementById("agent-badge");
+                if (report.includes("ECONOMIC SIGNAL") && report.includes("NEWS SIGNAL") && report.includes("CORPORATE")) {
+                    badge.textContent = "All Agents";
+                    badge.className = "agent-badge badge-all";
+                } else if (report.includes("ECONOMIC SIGNAL")) {
+                    badge.textContent = "Economic Agent";
+                    badge.className = "agent-badge badge-economic";
+                } else if (report.includes("NEWS SIGNAL")) {
+                    badge.textContent = "News Agent";
+                    badge.className = "agent-badge badge-news";
+                } else if (report.includes("CORPORATE")) {
+                    badge.textContent = "Corporate Agent";
+                    badge.className = "agent-badge badge-corporate";
+                } else {
+                    badge.textContent = "Supervisor";
+                    badge.className = "agent-badge badge-all";
+                }
+
+            } catch (err) {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("report-section").style.display = "block";
+                document.getElementById("report").innerText =
+                    "System Error\n\nCould not connect to the server. Please ensure the FastAPI server is running at http://127.0.0.1:8000";
+                document.getElementById("agent-badge").textContent = "";
+            }
+        }
+
+        // allow Ctrl+Enter / Cmd+Enter to submit
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("query").addEventListener("keydown", (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+                    askQuestion();
+                }
+            });
+        });
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Financial Intelligence System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/ui/style.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="title">Financial Intelligence System</h1>
+        <p class="subtitle">Multi-agent AI powered by real-time economic, news, and corporate data</p>
+    </header>
+
+    <main>
+        <section class="card" id="ask-section">
+            <div class="textarea-wrapper">
+                <textarea id="query" class="textarea" placeholder="Ask a financial question — e.g. Analyze Tesla's market position, What is the current inflation outlook?"></textarea>
+            </div>
+            <button id="ask-btn" class="btn" onclick="askQuestion()">Generate Report</button>
+
+            <div class="suggestions">
+                <strong>Sample queries</strong>
+                <ul>
+                    <li onclick="fillQuery(this)">What is the current inflation rate and how does it affect the market?</li>
+                    <li onclick="fillQuery(this)">Analyze Apple's competitors and industry position.</li>
+                    <li onclick="fillQuery(this)">What is the latest stock market news?</li>
+                </ul>
+            </div>
+
+            <div class="loader" id="loader" style="display:none;">
+                Analyzing financial data across agents...
+            </div>
+
+            <div class="domain-error" id="domain-error" style="display:none;">
+                This system only answers financial intelligence queries related to markets, economics, companies, or financial news.
+            </div>
+        </section>
+
+        <section class="card" id="report-section" style="display:none;">
+            <div class="report-header">
+                <h3>Financial Intelligence Report</h3>
+                <span class="agent-badge" id="agent-badge"></span>
+            </div>
+            <div class="report-body" id="report-body"></div>
+        </section>
+    </main>
+
+    <footer>
+        <small>© 2026 Financial Intelligence System &nbsp;&middot;&nbsp; Powered by LangGraph &middot; FastMCP &middot; Groq</small>
+    </footer>
+
+    <script>
+
+        // fill textarea when sample query is clicked
+        function fillQuery(el) {
+            document.getElementById("query").value = el.innerText;
+            document.getElementById("query").focus();
+        }
+
+        // split raw report text into labelled blocks
+        function parseReport(text) {
+            const blocks = [];
+
+            const sectionDefs = [
+                { key: "FINANCIAL INTELLIGENCE REPORT", type: "financial" },
+                { key: "ECONOMIC SIGNAL REPORT",        type: "economic"  },
+                { key: "NEWS SIGNAL REPORT",            type: "news"      },
+                { key: "CORPORATE INTELLIGENCE REPORT", type: "corporate" }
+            ];
+
+            // find which sections exist and where they start
+            const found = [];
+            sectionDefs.forEach(def => {
+                const idx = text.indexOf(def.key);
+                if (idx !== -1) found.push({ ...def, idx });
+            });
+
+            // sort by position in text
+            found.sort((a, b) => a.idx - b.idx);
+
+            if (found.length === 0) {
+                // no known section header — render as single generic block
+                blocks.push({ type: "financial", title: "Report", content: text.trim() });
+                return blocks;
+            }
+
+            found.forEach((section, i) => {
+                const start = section.idx + section.key.length;
+                const end   = (i + 1 < found.length) ? found[i + 1].idx : text.length;
+                const content = text.slice(start, end).trim();
+                blocks.push({ type: section.type, title: section.key, content });
+            });
+
+            return blocks;
+        }
+
+        // detect market outlook from text and return a styled pill HTML
+        function outlookPill(text) {
+            const lower = text.toLowerCase();
+            if (lower.includes("bullish"))  return '<span class="outlook-pill outlook-bullish">Bullish</span>';
+            if (lower.includes("bearish"))  return '<span class="outlook-pill outlook-bearish">Bearish</span>';
+            if (lower.includes("neutral"))  return '<span class="outlook-pill outlook-neutral">Neutral</span>';
+            return "";
+        }
+
+        // render parsed blocks into the report-body div
+        function renderReport(text) {
+            const container = document.getElementById("report-body");
+            container.innerHTML = "";
+
+            const blocks = parseReport(text);
+
+            blocks.forEach(block => {
+                const wrapper = document.createElement("div");
+                wrapper.className = "report-block";
+
+                const titleBar = document.createElement("div");
+                titleBar.className = `report-block-title ${block.type}`;
+                titleBar.textContent = block.title;
+                wrapper.appendChild(titleBar);
+
+                const body = document.createElement("div");
+                body.className = "report-block-content";
+
+                // highlight market outlook line
+                const lines = block.content.split("\n").map(line => {
+                    const trimmed = line.trim().toLowerCase();
+                    if (
+                        trimmed.startsWith("market outlook") ||
+                        trimmed.startsWith("market impact") ||
+                        trimmed.startsWith("overall news sentiment") ||
+                        trimmed.startsWith("investment insight")
+                    ) {
+                        const pill = outlookPill(line);
+                        return `<span style="color: var(--color-primary-light); font-weight:600;">${escapeHtml(line)}</span>${pill}`;
+                    }
+                    // section label lines (e.g. "Summary:", "Inflation:")
+                    if (/^[A-Z][a-zA-Z\s]+:$/.test(line.trim())) {
+                        return `<span style="color: var(--color-text-muted); font-size:0.82rem; text-transform:uppercase; letter-spacing:0.07em;">${escapeHtml(line)}</span>`;
+                    }
+                    return escapeHtml(line);
+                });
+
+                body.innerHTML = lines.join("\n");
+                wrapper.appendChild(body);
+                container.appendChild(wrapper);
+            });
+        }
+
+        function escapeHtml(str) {
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;");
+        }
+
+        async function askQuestion() {
+            const query = document.getElementById("query").value.trim();
+
+            if (query === "") {
+                alert("Please enter a financial query.");
+                return;
+            }
+
+            // reset UI state
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("report-section").style.display = "none";
+            document.getElementById("domain-error").style.display = "none";
+            document.getElementById("ask-btn").disabled = true;
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/query", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query })
+                });
+
+                const data = await response.json();
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("ask-btn").disabled = false;
+
+                const report = data.report || "";
+
+                // domain rejection
+                if (report.toLowerCase().includes("this system only answers")) {
+                    document.getElementById("domain-error").style.display = "block";
+                    return;
+                }
+
+                // render structured report
+                document.getElementById("report-section").style.display = "block";
+                renderReport(report);
+
+                // set agent badge
+                const badge = document.getElementById("agent-badge");
+                const hasEco  = report.includes("ECONOMIC SIGNAL");
+                const hasNews = report.includes("NEWS SIGNAL");
+                const hasCorp = report.includes("CORPORATE");
+
+                if (hasEco && hasNews && hasCorp) {
+                    badge.textContent = "All Agents";
+                    badge.className = "agent-badge badge-all";
+                } else if (hasEco) {
+                    badge.textContent = "Economic Agent";
+                    badge.className = "agent-badge badge-economic";
+                } else if (hasNews) {
+                    badge.textContent = "News Agent";
+                    badge.className = "agent-badge badge-news";
+                } else if (hasCorp) {
+                    badge.textContent = "Corporate Agent";
+                    badge.className = "agent-badge badge-corporate";
+                } else {
+                    badge.textContent = "Supervisor";
+                    badge.className = "agent-badge badge-all";
+                }
+
+                // smooth scroll to report
+                document.getElementById("report-section").scrollIntoView({ behavior: "smooth", block: "start" });
+
+            } catch (err) {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("ask-btn").disabled = false;
+                document.getElementById("report-section").style.display = "block";
+                renderReport("System Error\n\nCould not connect to the server.\nPlease ensure the FastAPI server is running at http://127.0.0.1:8000");
+                document.getElementById("agent-badge").textContent = "";
+            }
+        }
+
+        // Ctrl+Enter / Cmd+Enter to submit
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("query").addEventListener("keydown", (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === "Enter") askQuestion();
+            });
+        });
+
+    </script>
+</body>
+</html>
