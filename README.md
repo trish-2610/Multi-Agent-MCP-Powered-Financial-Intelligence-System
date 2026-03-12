@@ -14,14 +14,14 @@ The system is designed to simulate how industry-grade AI pipelines coordinate mu
 ## System Flow Diagram
 
 ```
-  User Query
-      │
-      ▼
-  FastAPI  (/query)
-      │
-      ▼
-  Supervisor Agent  ──── out-of-domain query ────► Rejection Message
-      │
+                        User Query
+                            │
+                            ▼
+                        FastAPI  (/query)
+                            │
+                            ▼
+                    Supervisor Agent  ──── out-of-domain query ────► Rejection Message
+                            │
       ├─────────────────────┬─────────────────────┐
       ▼                     ▼                     ▼
   Economic Agent        News Agent          Corporate Agent
