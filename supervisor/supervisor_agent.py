@@ -1,3 +1,4 @@
+## supervisor agent
 import os 
 from langchain_groq import ChatGroq
 from langgraph_supervisor import create_supervisor
@@ -5,17 +6,15 @@ from agents.economic_agent import create_economic_agent
 from agents.corporate_agent import create_corporate_agent
 from agents.news_agent import create_news_agent
 from dotenv import load_dotenv  
+from config import get_model
 load_dotenv()
 
-async def create_system():
+async def create_system(): ## creates the supervisor system with all agents and tools
     economic_agent = await create_economic_agent()
     news_agent = await create_news_agent()
     corporate_agent = await create_corporate_agent()
 
-    model = ChatGroq(
-        model = "llama-3.3-70b-versatile",
-        api_key=os.getenv("GROQ_API_KEY")
-    )
+    model = get_model()
 
     supervisor = create_supervisor(
     model=model,
